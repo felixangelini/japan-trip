@@ -9,12 +9,12 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Amatelini Japan Trip",
+  description: "Amatelini Japan Trip",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Japan Trip",
+    title: "Amatelini Japan Trip",
   },
 };
 export const viewport: Viewport = {
@@ -37,10 +37,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="it" suppressHydrationWarning>
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      <meta name="apple-mobile-web-app-title" content="Japan Trip" />
+      <meta name="apple-mobile-web-app-title" content="Amatelini Japan Trip" />
       <link rel="apple-touch-icon" href="/192.png" />
       <link rel="apple-touch-startup-image" href="/512.png" />
       {/* OG IMAGE */}

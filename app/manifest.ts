@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Japan Trip',
-    short_name: 'Japan Trip',
-    description: 'Our Japan Trip',
+    name: 'Amatelini Japan Trip',
+    short_name: 'Amatelini Japan Trip',
+    description: 'Amatelini Japan Trip',
     start_url: '/',
     display: 'standalone',
     background_color: '#000000',
