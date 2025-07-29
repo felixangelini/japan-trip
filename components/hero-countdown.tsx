@@ -17,7 +17,6 @@ export default function HeroCountdown({ actionButton }: { actionButton: React.Re
 
     // Array delle immagini di sfondo
     const backgroundImages = [
-        '/jap_1.avif',
         '/jap_2.jpg', 
         '/jap_3.jpeg'
     ]
