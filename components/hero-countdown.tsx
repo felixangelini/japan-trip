@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { format } from "date-fns"
+import Image from "next/image"
 
 interface TimeLeft {
     days: number
@@ -68,15 +69,27 @@ export default function HeroCountdown({ actionButton }: { actionButton: React.Re
     }, [backgroundImages.length])
 
     return (
-        <div className="relative h-full w-full flex items-center justify-center">
-            {/* Immagine di sfondo con effetto fade */}
-            <div 
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
-                style={{
-                    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${backgroundImages[currentImageIndex]}')`,
-                    opacity: isFading ? 0.3 : 1
-                }}
-            />
+        <div className="relative h-full w-full flex items-center justify-center overflow-hidden">
+            {/* Immagini di sfondo con Next.js Image */}
+            {backgroundImages.map((image, index) => (
+                <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentImageIndex && !isFading ? 'opacity-100' : 'opacity-0'
+                        }`}
+                >
+                    <Image
+                        src={image}
+                        alt={`Background image ${index + 1}`}
+                        fill
+                        className="object-cover"
+                        priority={index === 0}
+                        quality={85}
+                        sizes="100vw"
+                    />
+                    {/* Overlay scuro */}
+                    <div className="absolute inset-0 bg-black/40" />
+                </div>
+            ))}
 
             <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8">
                 {!isFinished ? (
