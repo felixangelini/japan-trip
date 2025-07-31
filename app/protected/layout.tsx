@@ -6,6 +6,7 @@ import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/s
 import { AppSidebar } from "@/components/app-sidebar";
 import { ItinerariesProvider } from "@/components/itineraries-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { PendingInvitesHandler } from "@/components/pending-invites-handler";
 
 export default function ProtectedLayout({
   children,
@@ -39,6 +40,7 @@ export default function ProtectedLayout({
         </main>
           </SidebarInset>
         </SidebarProvider>
+        <PendingInvitesHandler />
       </ItinerariesProvider>
     </QueryProvider>
   );

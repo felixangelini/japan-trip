@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useItineraries, useItinerary } from './use-itineraries';
+import {useItinerary, useUserOrCollaboratorItineraries } from './use-itineraries';
 import type { Itinerary } from '@/lib/schemas/itinerary';
 
 const CURRENT_ITINERARY_KEY = 'current-itinerary-id';
 
 export const useCurrentItinerary = () => {
-  const { data: itineraries = [], isLoading, error } = useItineraries();
+  const { data: itineraries = [], isLoading, error } = useUserOrCollaboratorItineraries();
   const [currentItinerary, setCurrentItinerary] = useState<Itinerary | null>(null);
 
   // Set current itinerary when data loads

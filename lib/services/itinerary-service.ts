@@ -27,24 +27,42 @@ const getCurrentUserId = async (): Promise<string> => {
 };
 
 // Fetch all itineraries for the current user
-export const fetchItineraries = async (): Promise<Itinerary[]> => {
+export const fetchUserOrCollaboratorItineraries = async (): Promise<Itinerary[]> => {
   try {
     const supabase = createClient();
-    const userId = await getCurrentUserId();
 
+    // Query for itineraries where user is owner OR collaborator
     const { data, error } = await supabase
       .from('itineraries')
-      .select('*')
-      .eq('user_id', userId)
+      .select('*, itinerary_collaborators(user_id)')
       .order('created_at', { ascending: false });
-
     if (error) {
-      throw new Error(`Failed to fetch itineraries: ${error.message || 'Unknown error'}`);
+      throw new Error(`Failed to fetch itineraries: ${error.message}`);
     }
 
     return data || [];
   } catch {
-    // Return empty array instead of throwing for better UX
+    return [];
+  }
+};
+// Fetch all itineraries for the current user
+export const fetchItineraries = async (): Promise<Itinerary[]> => {
+  try {
+    const supabase = createClient();
+
+    // Query for itineraries where user is owner OR collaborator
+    const { data, error } = await supabase
+      .from('itineraries')
+      .select('*')
+      .eq('is_public', true)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      throw new Error(`Failed to fetch itineraries: ${error.message}`);
+    }
+
+    return data || [];
+  } catch {
     return [];
   }
 };
@@ -52,13 +70,12 @@ export const fetchItineraries = async (): Promise<Itinerary[]> => {
 // Fetch a single itinerary by ID
 export const fetchItinerary = async (id: string): Promise<Itinerary> => {
   const supabase = createClient();
-  const userId = await getCurrentUserId();
 
+  // Query for itineraries where user is owner OR collaborator
   const { data, error } = await supabase
     .from('itineraries')
     .select('*')
     .eq('id', id)
-    .eq('user_id', userId)
     .single();
 
   if (error) {

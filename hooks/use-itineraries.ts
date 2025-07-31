@@ -1,13 +1,25 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
-  fetchItineraries, 
+  fetchUserOrCollaboratorItineraries, 
   fetchItinerary, 
   createItinerary, 
   updateItinerary, 
   deleteItinerary,
-  itineraryKeys 
+  itineraryKeys, 
+  fetchItineraries
 } from '@/lib/services/itinerary-service';
 import type {  UpdateItineraryInput } from '@/lib/schemas/itinerary';
+
+
+export const useUserOrCollaboratorItineraries = () => { 
+  return useQuery({
+    queryKey: itineraryKeys.lists(),
+    queryFn: fetchUserOrCollaboratorItineraries,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 1, // Retry only once
+    retryDelay: 1000, // Wait 1 second before retry
+  });
+};
 
 // Hook to fetch all itineraries
 export const useItineraries = () => {
