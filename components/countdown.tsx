@@ -11,9 +11,8 @@ interface TimeLeft {
     seconds: number
 }
 
-export default function Countdown() {
-    // Data target per il viaggio in Giappone
-    const targetDate = new Date("2025-12-01T08:00:00").getTime()
+export default function Countdown({ date }: { date?: string }) {
+    const targetDate = new Date(date || "2025-12-01T08:00:00").getTime()
 
     const [timeLeft, setTimeLeft] = useState<TimeLeft>({
         days: 0,
