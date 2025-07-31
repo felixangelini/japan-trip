@@ -14,6 +14,7 @@ export interface FileUploadOptions {
   entityType: 'itinerary' | 'stop' | 'activity' | 'accommodation' | 'note';
   entityId: string;
   filename?: string;
+  skipDatabaseInsert?: boolean; // New option to skip database insert for temp IDs
 }
 
 /**
@@ -24,7 +25,8 @@ export async function uploadAttachment({
   userId,
   entityType,
   entityId,
-  filename
+  filename,
+  skipDatabaseInsert = false
 }: FileUploadOptions): Promise<UploadResult> {
   const supabase = createClient();
   
@@ -38,7 +40,7 @@ export async function uploadAttachment({
     const storagePath = `${userId}/${entityType}/${entityId}/${uniqueFilename}`;
     
     // Upload file to storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('attachments')
       .upload(storagePath, file, {
         cacheControl: '3600',
@@ -57,6 +59,15 @@ export async function uploadAttachment({
     const { data: urlData } = supabase.storage
       .from('attachments')
       .getPublicUrl(storagePath);
+    
+    // Skip database insert if requested (for temp IDs)
+    if (skipDatabaseInsert) {
+      return {
+        success: true,
+        url: urlData.publicUrl,
+        path: storagePath
+      };
+    }
     
     // Determine file type
     const fileType = getFileType(file.type, fileExtension);

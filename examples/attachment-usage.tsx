@@ -20,8 +20,22 @@ export function AttachmentManager({
 }: AttachmentManagerProps) {
   const [recentUploads, setRecentUploads] = useState<Attachment[]>([]);
 
-  const handleUploadComplete = (attachment: Attachment) => {
-    setRecentUploads(prev => [attachment, ...prev.slice(0, 4)]); // Keep last 5
+  const handleUploadComplete = (url: string) => {
+    // Create a mock attachment object for display purposes
+    const mockAttachment: Attachment = {
+      id: `temp-${Date.now()}`,
+      user_id: userId,
+      itinerary_id: entityType === 'itinerary' ? entityId : null,
+      stop_id: entityType === 'stop' ? entityId : null,
+      activity_id: entityType === 'activity' ? entityId : null,
+      accommodation_id: entityType === 'accommodation' ? entityId : null,
+      note_id: entityType === 'note' ? entityId : null,
+      url,
+      type: 'file',
+      filename: url.split('/').pop() || 'uploaded-file',
+      uploaded_at: new Date().toISOString()
+    };
+    setRecentUploads(prev => [mockAttachment, ...prev.slice(0, 4)]); // Keep last 5
   };
 
   const handleUploadError = (error: string) => {
@@ -48,7 +62,6 @@ export function AttachmentManager({
           <TabsContent value="upload" className="space-y-4">
             <FileUpload
               entityType={entityType}
-              entityId={entityId}
               userId={userId}
               onUploadComplete={handleUploadComplete}
               onUploadError={handleUploadError}
