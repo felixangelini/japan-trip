@@ -103,6 +103,11 @@ export const useDeleteItinerary = () => {
       
       // Remove the deleted itinerary from cache
       queryClient.removeQueries({ queryKey: itineraryKeys.detail(deletedId) });
+      
+      // Invalidate activities queries since activities are deleted in cascade
+      queryClient.invalidateQueries({ 
+        queryKey: ['activities'] 
+      });
     },
   });
 }; 

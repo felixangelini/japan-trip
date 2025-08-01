@@ -44,12 +44,11 @@ export interface Database {
           title: string;
           description: string | null;
           location_name: string | null;
-          lat: number | null;
-          lng: number | null;
           start_date: string | null;
           end_date: string | null;
           order: number | null;
           accommodation_id: string | null;
+          image_url: string | null;
           created_at: string;
         };
         Insert: {
@@ -59,12 +58,11 @@ export interface Database {
           title: string;
           description?: string | null;
           location_name?: string | null;
-          lat?: number | null;
-          lng?: number | null;
           start_date?: string | null;
           end_date?: string | null;
           order?: number | null;
           accommodation_id?: string | null;
+          image_url?: string | null;
           created_at?: string;
         };
         Update: {
@@ -73,13 +71,12 @@ export interface Database {
           parent_stop_id?: string | null;
           title?: string;
           description?: string | null;
-          location_name?: string | null;
-          lat?: number | null;
-          lng?: number | null;
+          location_name?: string | null;  
           start_date?: string | null;
           end_date?: string | null;
           order?: number | null;
           accommodation_id?: string | null;
+          image_url?: string | null;
           created_at?: string;
         };
       };
@@ -87,36 +84,33 @@ export interface Database {
         Row: {
           id: string;
           stop_id: string;
+          itinerary_id: string;
           title: string;
           description: string | null;
           scheduled_at: string | null;
           location_name: string | null;
-          lat: number | null;
-          lng: number | null;
           external_link: string | null;
           created_at: string;
         };
         Insert: {
           id?: string;
           stop_id: string;
+          itinerary_id: string;
           title: string;
           description?: string | null;
           scheduled_at?: string | null;
           location_name?: string | null;
-          lat?: number | null;
-          lng?: number | null;
           external_link?: string | null;
           created_at?: string;
         };
         Update: {
           id?: string;
           stop_id?: string;
+          itinerary_id?: string;
           title?: string;
           description?: string | null;
           scheduled_at?: string | null;
           location_name?: string | null;
-          lat?: number | null;
-          lng?: number | null;
           external_link?: string | null;
           created_at?: string;
         };

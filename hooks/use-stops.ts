@@ -96,6 +96,11 @@ export const useDeleteStop = () => {
       queryClient.invalidateQueries({ 
         queryKey: ['accommodations'] 
       });
+      
+      // Invalidate activities queries since activities are deleted in cascade
+      queryClient.invalidateQueries({ 
+        queryKey: ['activities'] 
+      });
     },
   });
 }; 

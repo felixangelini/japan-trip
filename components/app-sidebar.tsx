@@ -42,6 +42,10 @@ const data = {
           title: "Tappe",
           url: "/protected/stops",
         },
+        {
+          title: "Attività",
+          url: "/protected/activities",
+        },
       ],
     },
     {

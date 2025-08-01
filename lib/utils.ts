@@ -15,6 +15,14 @@ export function formatDate(dateString: string) {
   }
 }
 
+export function formatTime(dateString: string) {
+  try {
+    return format(new Date(dateString), 'HH:mm', { locale: it });
+  } catch {
+    return dateString;
+  }
+}
+
 // This check can be removed, it is just for tutorial purposes
 export const hasEnvVars =
   process.env.NEXT_PUBLIC_SUPABASE_URL &&
