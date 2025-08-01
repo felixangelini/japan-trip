@@ -40,6 +40,11 @@ export const useCreateStop = () => {
       // Invalidate and refetch stops list
       queryClient.invalidateQueries({ queryKey: stopKeys.list(itineraryId) });
       
+      // Invalidate accommodations queries to refresh stop relationships
+      queryClient.invalidateQueries({ 
+        queryKey: ['accommodations'] 
+      });
+      
       // Add the new stop to the cache
       queryClient.setQueryData(
         stopKeys.detail(newStop.id),
@@ -65,6 +70,11 @@ export const useUpdateStop = () => {
       
       // Invalidate stops list to refresh the order
       queryClient.invalidateQueries({ queryKey: stopKeys.lists() });
+      
+      // Invalidate accommodations queries to refresh stop relationships
+      queryClient.invalidateQueries({ 
+        queryKey: ['accommodations'] 
+      });
     },
   });
 };
@@ -81,6 +91,11 @@ export const useDeleteStop = () => {
       
       // Invalidate stops list
       queryClient.invalidateQueries({ queryKey: stopKeys.lists() });
+      
+      // Invalidate accommodations queries to refresh stop relationships
+      queryClient.invalidateQueries({ 
+        queryKey: ['accommodations'] 
+      });
     },
   });
 }; 

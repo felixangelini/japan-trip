@@ -49,6 +49,7 @@ export interface Database {
           start_date: string | null;
           end_date: string | null;
           order: number | null;
+          accommodation_id: string | null;
           created_at: string;
         };
         Insert: {
@@ -63,6 +64,7 @@ export interface Database {
           start_date?: string | null;
           end_date?: string | null;
           order?: number | null;
+          accommodation_id?: string | null;
           created_at?: string;
         };
         Update: {
@@ -77,6 +79,7 @@ export interface Database {
           start_date?: string | null;
           end_date?: string | null;
           order?: number | null;
+          accommodation_id?: string | null;
           created_at?: string;
         };
       };
@@ -178,39 +181,30 @@ export interface Database {
       accommodations: {
         Row: {
           id: string;
-          stop_id: string;
+          stop_id: string | null;
+          itinerary_id: string;
           name: string;
-          check_in: string;
-          check_out: string;
           address: string | null;
-          lat: number | null;
-          lng: number | null;
           external_link: string | null;
           notes: string | null;
           created_at: string;
         };
         Insert: {
           id?: string;
-          stop_id: string;
+          stop_id?: string | null;
+          itinerary_id: string;
           name: string;
-          check_in: string;
-          check_out: string;
           address?: string | null;
-          lat?: number | null;
-          lng?: number | null;
           external_link?: string | null;
           notes?: string | null;
           created_at?: string;
         };
         Update: {
           id?: string;
-          stop_id?: string;
+          stop_id?: string | null;
+          itinerary_id?: string;
           name?: string;
-          check_in?: string;
-          check_out?: string;
           address?: string | null;
-          lat?: number | null;
-          lng?: number | null;
           external_link?: string | null;
           notes?: string | null;
           created_at?: string;

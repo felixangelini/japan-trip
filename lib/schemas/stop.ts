@@ -9,6 +9,7 @@ export const createStopSchema = z.object({
   end_date: z.string().optional(),
   image_url: z.string().optional(),
   parent_stop_id: z.string().nullable().optional(),
+  accommodation_id: z.string().nullable().optional(),
 });
 
 // Schema for updating a stop
@@ -20,6 +21,7 @@ export const updateStopSchema = z.object({
   end_date: z.string().optional(),
   image_url: z.string().optional(),
   parent_stop_id: z.string().nullable().optional(),
+  accommodation_id: z.string().nullable().optional(),
 });
 
 // Schema for stop (database model)
@@ -34,6 +36,7 @@ export const stopSchema = z.object({
   end_date: z.string().nullable(),
   order: z.number().nullable(),
   image_url: z.string().nullable(),
+  accommodation_id: z.string().uuid().nullable(),
   created_at: z.string(),
 });
 

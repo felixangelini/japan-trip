@@ -78,18 +78,59 @@ export const updateStop = async (
 ): Promise<Stop> => {
   const supabase = createClient();
 
-  const { data, error } = await supabase
-    .from('stops')
-    .update(updates)
-    .eq('id', id)
-    .select()
-    .single();
+  // Se stiamo aggiornando accommodation_id, dobbiamo sincronizzare anche l'accommodation
+  if (updates.accommodation_id !== undefined) {
+    // Prima aggiorniamo lo stop
+    const { data: updatedStop, error: stopError } = await supabase
+      .from('stops')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
 
-  if (error) {
-    throw new Error(`Failed to update stop: ${error.message}`);
+    if (stopError) {
+      throw new Error(`Failed to update stop: ${stopError.message}`);
+    }
+
+    // Poi sincronizziamo l'accommodation
+    if (updates.accommodation_id) {
+      // Se accommodation_id è impostato, aggiorniamo l'accommodation con questo stop_id
+      const { error: accommodationError } = await supabase
+        .from('accommodations')
+        .update({ stop_id: id })
+        .eq('id', updates.accommodation_id);
+
+      if (accommodationError) {
+        throw new Error(`Failed to update accommodation: ${accommodationError.message}`);
+      }
+    } else {
+      // Se accommodation_id è null, rimuoviamo il riferimento da tutte le accommodation che puntano a questo stop
+      const { error: accommodationError } = await supabase
+        .from('accommodations')
+        .update({ stop_id: null })
+        .eq('stop_id', id);
+
+      if (accommodationError) {
+        throw new Error(`Failed to update accommodations: ${accommodationError.message}`);
+      }
+    }
+
+    return updatedStop;
+  } else {
+    // Se non stiamo aggiornando accommodation_id, procediamo normalmente
+    const { data, error } = await supabase
+      .from('stops')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to update stop: ${error.message}`);
+    }
+
+    return data;
   }
-
-  return data;
 };
 
 // Delete a stop
